@@ -2,10 +2,9 @@
 #include<conio.h>
 #include<time.h>
 
-int load_data_file_text(char filename[],double *data,int *count){
+void load_data_file_text(char filename[],double *data,int *count){
 	FILE *fp;
 	double a;
-	int success = 0;
 	if((fp=fopen(filename,"r"))!=NULL){
 		*count = 0;
 		while(fscanf(fp,"%lf",&a)==1){
@@ -14,15 +13,13 @@ int load_data_file_text(char filename[],double *data,int *count){
 		}
 			fclose(fp);
 			printf("Load file %s %d records complete\n",filename,*count);
-			success = *count;
 	}
 	else{
 		printf("Error can't Load file %s\n",filename);
 	}
-	return success;
 }
 
-int load_data_file_binary(char filename[],int *data,int *count){
+void load_data_file_binary(char filename[],int *data,int *count){
 	FILE *fp;
 	int size;
 	fp = fopen(filename,"rb");
@@ -34,9 +31,7 @@ int load_data_file_binary(char filename[],int *data,int *count){
 	}
 	else{
 		printf("Error can't Load file %s\n",filename);	
-		return 0;
 	}
-	return *count;
 }
 
 void order_data_double(double *data,int count){
@@ -135,10 +130,10 @@ int main(){
 	double start,stop,total;
 	int data2[120000];
 	int same_data[2000];
-	int count_d1,count_d2,same_count,success,i;
+	int count_d1,count_d2,same_count,i;
 	char file1[50] = "txt100000.txt",file2[50] = "bin100000.bin";
-	success = load_data_file_text(file1,data1,&count_d1);
-	success = load_data_file_binary(file2,data2,&count_d2);
+	load_data_file_text(file1,data1,&count_d1);
+	load_data_file_binary(file2,data2,&count_d2);
 	printf("\nRead text file from %s total %d records\n",file1,count_d1);
 	printf("Read binary file frim %s total %d records\n",file2,count_d2);
 	printf("Total data = %d records\n",count_d1+count_d2);
